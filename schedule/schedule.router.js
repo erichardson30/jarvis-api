@@ -11,6 +11,7 @@ apiRouter.post('/', function(req, res) {
     console.log(req.body);
     var schedule = new Schedules();
     
+    schedule.firstName = req.body.firstName;
     schedule.real_name = req.body.real_name;
     schedule.userName = req.body.userName;
     schedule.email = req.body.email;
