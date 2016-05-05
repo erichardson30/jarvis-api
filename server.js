@@ -28,12 +28,12 @@ mongoose.connect(mongoUri, options);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log('API Connected to MongoLab Interview DB');
+  console.log('API Connected to MongoLab Jarvis DB');
 });
 
 // ROOT ROUTES
 app.get('/', function(req, res) {
-  res.send("Interview app home page");
+  res.send("Jarvis api home page");
 });
 
 
