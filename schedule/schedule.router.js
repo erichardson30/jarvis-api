@@ -32,13 +32,13 @@ apiRouter.get('/now', function(req, res) {
 apiRouter.post('/', function(req, res) {
     var schedule = new Schedules();
     console.log(req.body);
-    schedule.real_name = req.body.real_name;
-    schedule.userName = req.body.userName;
-    schedule.email = req.body.email;
-    schedule.userId = req.body.userId;
-    schedule.date = req.body.date;
-    schedule.channel = req.body.channel;
-    schedule.expecting = req.body.expecting;
+    schedule.real_name = req.body.schedule.real_name;
+    schedule.userName = req.body.schedule.userName;
+    schedule.email = req.body.schedule.email;
+    schedule.userId = req.body.schedule.userId;
+    schedule.date = req.body.schedule.date;
+    schedule.channel = req.body.schedule.channel;
+    schedule.expecting = req.body.schedule.expecting;
     
     schedule.save(function(err, schedule) {
         if (err) res.send(err);
