@@ -29,4 +29,20 @@ apiRouter.get('/now', function(req, res) {
     //     });
 });
 
+apiRouter.post('/', function(req, res) {
+    var schedule = new Schedules();
+    schedule.real_name = req.body.real_name;
+    schedule.userName = req.body.userName;
+    schedule.email = req.body.email;
+    schedule.userId = req.body.userId;
+    schedule.date = req.body.date;
+    schedule.channel = req.body.channel;
+    schedule.expecting = req.body.expecting;
+    
+    schedule.save(function(err, schedule) {
+        if (err) res.send(err);
+        res.json({message: 'Schedule was created'});
+    });
+});
+
 module.exports = apiRouter;
