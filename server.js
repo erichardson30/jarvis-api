@@ -41,7 +41,7 @@ app.get('/', function(req, res) {
 app.use('/api', require('./api.router'));
 
 // START SERVER
-// app.listen(port);
+app.listen(port);
 console.log('Magic is happening on port ' + port);
 
 // ***********************************
