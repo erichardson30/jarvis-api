@@ -31,6 +31,7 @@ apiRouter.get('/now', function(req, res) {
 
 apiRouter.post('/', function(req, res) {
     var schedule = new Schedules();
+    console.log(req.body);
     schedule.real_name = req.body.real_name;
     schedule.userName = req.body.userName;
     schedule.email = req.body.email;
