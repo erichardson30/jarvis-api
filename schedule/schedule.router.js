@@ -11,7 +11,7 @@ apiRouter.get('/', function(req, res) {
     console.log("get all schedules");
     Schedules.find({}, function(err, schedules) {
         if(err) res.send(err);
-        res.json(templates);
+        res.json(schedules);
     });
 });
 
