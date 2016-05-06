@@ -36,13 +36,13 @@ apiRouter.get('/', function(req, res) {
 });
 
 apiRouter.get('/now', function(req, res) {
-    var later = moment.tz('America/New_York').add(15, 'm').format();
-    var earlier = moment.tz('America/New_York').subtract(15, 'm').format();
+    var later = moment().add(15, 'm').toDate();
+    var earlier = moment().subtract(15, 'm').toDate();
     
      Schedules.find({
          'date': {
-            '$gt': new Date(earlier),
-            '$lt': new Date(later)
+            '$gt': earlier,
+            '$lt': later
          }
      }, function(err, schedules) {
         if(err) res.send(err);
