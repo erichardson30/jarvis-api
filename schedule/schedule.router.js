@@ -36,9 +36,8 @@ apiRouter.get('/', function(req, res) {
 });
 
 apiRouter.get('/now', function(req, res) {
-    var now = new Date();
-    var later = moment(now).add(15, 'm').toDate();
-    var earlier = moment(now).subtract(15, 'm').toDate();
+    var later = moment().add(15, 'm').toDate();
+    var earlier = moment().subtract(15, 'm').toDate();
     
      Schedules.find({
          'date': {
