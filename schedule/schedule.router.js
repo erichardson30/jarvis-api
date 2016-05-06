@@ -1,6 +1,7 @@
 var express = require('express');
 var ObjectId = require('mongodb').ObjectID;
 var moment = require('moment');
+var timezone = require('moment-timezone');
 
 // Mongoose Schemas
 var Schedules = require('./schedule.schema');
@@ -36,8 +37,8 @@ apiRouter.get('/', function(req, res) {
 });
 
 apiRouter.get('/now', function(req, res) {
-    var later = moment().local().add(15, 'm').toDate();
-    var earlier = moment().local().subtract(15, 'm').toDate();
+    var later = timezone.tz('America/New_York').add(15, 'm').toDate();
+    var earlier = timezone.tz('America/New_York').subtract(15, 'm').toDate();
     
      Schedules.find({
          'date': {
