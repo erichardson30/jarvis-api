@@ -17,7 +17,7 @@ apiRouter.post('/', function(req, res) {
     schedule.userName = req.body.userName;
     schedule.email = req.body.email;
     schedule.userId = req.body.userId;
-    schedule.date = req.body.date.toISOString();
+    schedule.date = req.body.date;
     schedule.channel = req.body.channel;
     schedule.expecting = req.body.expecting;
     
