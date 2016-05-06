@@ -1,6 +1,6 @@
 var express = require('express');
 var ObjectId = require('mongodb').ObjectID;
-var moment = require('moment');
+var moment = require('moment-timezone');
 
 // Mongoose Schemas
 var Schedules = require('./schedule.schema');
