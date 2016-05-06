@@ -24,6 +24,8 @@ var mongoUri = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASS + 
 
 // CONNECT TO MONGOLAB
 mongoose.connect(mongoUri, options);
+mongoose.set('debug', true);
+
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
