@@ -35,17 +35,19 @@ apiRouter.get('/', function(req, res) {
 });
 
 apiRouter.get('/now', function(req, res) {
-    // var query = [
-    //     { 'title': { $regex: new RegExp(req.params.input, "i") } },
-    //     { 'tags': { $regex: new RegExp(req.params.input, "i") } },
-    // ];
-    // Template.find({ $or: query })
-    //     .skip(req.query.skip)
-    //     .limit(req.query.limit)
-    //     .exec(function(err, results){
-    //         if(err) res.send(err);
-    //         res.json(results);
-    //     });
+    var now = new Date();
+    var later = moment(now).add(15, 'm');
+    var earlier = moment(now).subtract(15, 'm');
+    
+     Schedules.find({
+         date: {
+             $gte: earlier,
+             $lte: later
+         }
+     }, function(err, schedules) {
+        if(err) res.send(err);
+        res.json(schedules);
+    });
 });
 
 module.exports = apiRouter;
