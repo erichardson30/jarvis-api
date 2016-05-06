@@ -40,9 +40,9 @@ apiRouter.get('/now', function(req, res) {
     var earlier = moment.tz('America/New_York').subtract(15, 'm').format();
     
      Schedules.find({
-         'date.$date': {
-            '$gte': earlier,
-            '$lte': later
+         'date': {
+            '$gt': new Date(earlier),
+            '$lt': new Date(later)
          }
      }, function(err, schedules) {
         if(err) res.send(err);
