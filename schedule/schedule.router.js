@@ -99,10 +99,10 @@ apiRouter.put('/checkedin/:id', function( req, res) {
     })
 });
 
-apiRouter.get('/list/:date', function(req, res) {
+apiRouter.get('/list', function(req, res) {
     var query = {};
-   if(req.params.date) {
-       query = {'date' : { '$gte' : req.params.date }}
+   if(req.query.date) {
+       query = {'date' : { '$gte' : req.query.date }}
    } else {
        var date = timezone.tz('America/New_York').format("YYYY-MM-DD").toDate()
        query = {'date' : { '$gte': date }}
