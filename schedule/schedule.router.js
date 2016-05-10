@@ -107,6 +107,13 @@ apiRouter.get('/list/:date', function(req, res) {
        var date = timezone.tz('America/New_York').format("YYYY-MM-DD").toDate()
        query = {'date' : { '$gte': date }}
    }
+   
+   Schedules.find({
+         query
+     }, function(err, schedules) {
+        if(err) res.send(err);
+        res.json(schedules);
+    });
 });
 
 module.exports = apiRouter;
