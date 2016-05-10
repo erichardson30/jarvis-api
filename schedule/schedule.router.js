@@ -51,4 +51,14 @@ apiRouter.get('/now', function(req, res) {
     });
 });
 
+apiRouter.delete('/', function(req, res) {
+    var earlier = timezone.tz('America/New_York').subtract(1, 'd').toDate();
+    
+     Schedules.find({
+         'date': {
+            '$lte': earlier
+         }
+     }).remove().exec();
+});
+
 module.exports = apiRouter;
