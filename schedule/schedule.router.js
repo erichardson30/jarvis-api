@@ -108,9 +108,7 @@ apiRouter.get('/list/:date', function(req, res) {
        query = {'date' : { '$gte': date }}
    }
    
-   Schedules.find({
-         query
-     }, function(err, schedules) {
+   Schedules.find(query, function(err, schedules) {
         if(err) res.send(err);
         res.json(schedules);
     });
