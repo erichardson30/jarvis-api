@@ -52,7 +52,7 @@ apiRouter.get('/now', function(req, res) {
 });
 
 apiRouter.delete('/', function(req, res) {
-    var earlier = timezone.tz('America/New_York').subtract(1, 'd').toDate();
+    var earlier = timezone.tz('America/New_York').subtract(7, 'd').toDate();
     
      Schedules.remove({
          'date': {
