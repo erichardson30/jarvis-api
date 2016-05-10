@@ -51,14 +51,17 @@ apiRouter.get('/now', function(req, res) {
     });
 });
 
-apiRouter.delete('/', function(req, res) {
+apiRouter.delete('/now', function(req, res) {
     var earlier = timezone.tz('America/New_York').subtract(1, 'd').toDate();
     
-     Schedules.find({
+     Schedules.remove({
          'date': {
-            '$lte': earlier
+            '$lt': earlier
          }
-     }).remove().exec();
+     }, function(err, schedules) {
+        if(err) res.send(err);
+        res.json(schedules);
+    });
 });
 
 module.exports = apiRouter;
