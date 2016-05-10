@@ -60,7 +60,7 @@ apiRouter.delete('/', function(req, res) {
          }
      }, function(err, schedules) {
         if(err) res.send(err);
-        res.json(schedules);
+        res.json({message : "Old entries deleted"});
     });
 });
 
