@@ -34,7 +34,7 @@ apiRouter.post('/', function(req, res) {
     } else {
         schedule.expecting = 'A visitor';
     }
-    if(req.body.checkedIn) schedule.checkedIn = req.body.checkedIn;
+    if(req.body.checkedIn !== null) schedule.checkedIn = req.body.checkedIn;
     if(req.body.checkedInDate) schedule.checkedInDate = req.body.checkedInDate;
     
     schedule.save(function(err, schedule) {
