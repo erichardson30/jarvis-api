@@ -9,18 +9,33 @@ var Schedules = require('./schedule.schema');
 // API ROUTES
 var apiRouter = express.Router();
 
+// creates a new entry in the db
 apiRouter.post('/', function(req, res) {
     console.log(req.body);
     var schedule = new Schedules();
     
-    schedule.firstName = req.body.firstName;
-    schedule.real_name = req.body.real_name;
-    schedule.userName = req.body.userName;
-    schedule.email = req.body.email;
-    schedule.userId = req.body.userId;
-    schedule.date = req.body.date;
-    schedule.channel = req.body.channel;
-    schedule.expecting = req.body.expecting;
+    if(req.body.firstName) {
+        schedule.firstName = req.body.firstName;
+    } else {
+        schedule.firstName = 'Cardinal - RDU';
+    }
+    if(req.body.real_name) schedule.real_name = req.body.real_name;
+    if(req.body.userName) schedule.userName = req.body.userName;
+    if(req.body.email) schedule.email = req.body.email;
+    if(req.body.userId) schedule.userId = req.body.userId;
+    if(req.body.date) schedule.date = req.body.date;
+    if(req.body.channel) {
+        schedule.channel = req.body.channel;
+    } else {
+        schedule.channel = 'C17MD45N2';
+    }
+    if(req.body.expecting) {
+        schedule.expecting.name = req.body.expecting;
+    } else {
+        schedule.expecting.name = 'A visitor';
+    }
+    if(req.body.checkedIn) schedule.expecting.checkedIn = req.body.checkedIn;
+    if(req.body.checkedInDate) schedule.expecting.checkedInDate = req.body.checkedInDate;
     
     schedule.save(function(err, schedule) {
         if (err) res.send(err);
@@ -28,6 +43,7 @@ apiRouter.post('/', function(req, res) {
     });
 });
 
+// gets all entries in the db 
 apiRouter.get('/', function(req, res) {
     console.log("get all schedules");
     Schedules.find({}, function(err, schedules) {
@@ -36,6 +52,7 @@ apiRouter.get('/', function(req, res) {
     });
 });
 
+// gets all records within a 15 min window for everyone that is not checked in 
 apiRouter.get('/now', function(req, res) {
     var later = timezone.tz('America/New_York').add(15, 'm').toDate();
     var earlier = timezone.tz('America/New_York').subtract(15, 'm').toDate();
@@ -44,13 +61,15 @@ apiRouter.get('/now', function(req, res) {
          'date': {
             '$gt': earlier,
             '$lt': later
-         }
+         },
+         'expecting.checkedIn' : 'false'
      }, function(err, schedules) {
         if(err) res.send(err);
         res.json(schedules);
     });
 });
 
+// deletes all db entries after a week
 apiRouter.delete('/', function(req, res) {
     var earlier = timezone.tz('America/New_York').subtract(7, 'd').toDate();
     
@@ -62,6 +81,32 @@ apiRouter.delete('/', function(req, res) {
         if(err) res.send(err);
         res.json({message : "Old entries deleted"});
     });
+});
+
+apiRouter.put('/checkedin/:id', function( req, res) {
+    Schedules.findById(req.params.id, function(err, schedule) {
+        if(err) res.send(err);
+        
+        schedule = new Schedules();
+        
+        schedule.expecting.checkedIn = true;
+        schedule.expecting.checkedInDate = timezone.tz('America/New_York').toDate();
+        
+        schedule.save(function(err, schedule) {
+            if(err) res.send(err);
+            res.send({message: "Checked in!"});
+        })
+    })
+});
+
+apiRouter.get('/list/:date', function(req, res) {
+    var query = {};
+   if(req.params.date) {
+       query = {'date' : { '$gte' : req.params.date }}
+   } else {
+       var date = timezone.tz('America/New_York').format("YYYY-MM-DD").toDate()
+       query = {'date' : { '$gte': date }}
+   }
 });
 
 module.exports = apiRouter;

@@ -9,7 +9,11 @@ var ScheduleSchema = new Schema({
     userId : String,
     date : Date,
     channel: String,
-    expecting : String
+    expecting : {
+        name : String,
+        checkedIn : Boolean,
+        checkedInDate : Date
+    }
 });
 
 // Return the model
