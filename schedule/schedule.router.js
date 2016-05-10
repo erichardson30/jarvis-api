@@ -30,12 +30,12 @@ apiRouter.post('/', function(req, res) {
         schedule.channel = 'C17MD45N2';
     }
     if(req.body.expecting) {
-        schedule.expecting.name = req.body.expecting;
+        schedule.expecting = req.body.expecting;
     } else {
-        schedule.expecting.name = 'A visitor';
+        schedule.expecting = 'A visitor';
     }
-    if(req.body.checkedIn) schedule.expecting.checkedIn = req.body.checkedIn;
-    if(req.body.checkedInDate) schedule.expecting.checkedInDate = req.body.checkedInDate;
+    if(req.body.checkedIn) schedule.checkedIn = req.body.checkedIn;
+    if(req.body.checkedInDate) schedule.checkedInDate = req.body.checkedInDate;
     
     schedule.save(function(err, schedule) {
         if (err) res.send(err);
@@ -62,7 +62,7 @@ apiRouter.get('/now', function(req, res) {
             '$gt': earlier,
             '$lt': later
          },
-         'expecting.checkedIn' : 'false'
+         'checkedIn' : 'false'
      }, function(err, schedules) {
         if(err) res.send(err);
         res.json(schedules);
@@ -89,8 +89,8 @@ apiRouter.put('/checkedin/:id', function( req, res) {
         
         schedule = new Schedules();
         
-        schedule.expecting.checkedIn = true;
-        schedule.expecting.checkedInDate = timezone.tz('America/New_York').toDate();
+        schedule.checkedIn = true;
+        schedule.checkedInDate = timezone.tz('America/New_York').toDate();
         
         schedule.save(function(err, schedule) {
             if(err) res.send(err);
