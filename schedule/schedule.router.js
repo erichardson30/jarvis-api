@@ -103,7 +103,7 @@ apiRouter.get('/list', function(req, res) {
     var query = {};
    if(req.query.date) {
        console.log("date = " + req.query.date);
-       var date = timezone.tz(req.query.date, 'America/New_York').format("MMDDYYYY");
+       var date = timezone.tz(req.query.date, 'America/New_York');
     //    date = date.toDate();
        console.log("new date = " + date);
        query = {'date' : { '$gte' : date }};
