@@ -14,26 +14,14 @@ apiRouter.post('/', function(req, res) {
     console.log(req.body);
     var schedule = new Schedules();
     
-    if(req.body.firstName) {
-        schedule.firstName = req.body.firstName;
-    } else {
-        schedule.firstName = 'Cardinal - RDU';
-    }
+    if(req.body.firstName) schedule.firstName = req.body.firstName;
     if(req.body.real_name) schedule.real_name = req.body.real_name;
     if(req.body.userName) schedule.userName = req.body.userName;
     if(req.body.email) schedule.email = req.body.email;
     if(req.body.userId) schedule.userId = req.body.userId;
     if(req.body.date) schedule.date = req.body.date;
-    if(req.body.channel) {
-        schedule.channel = req.body.channel;
-    } else {
-        schedule.channel = 'C17MD45N2';
-    }
-    if(req.body.expecting) {
-        schedule.expecting = req.body.expecting;
-    } else {
-        schedule.expecting = 'A visitor';
-    }
+    if(req.body.channel) schedule.channel = req.body.channel;
+    if(req.body.expecting) schedule.expecting = req.body.expecting;
     if(req.body.checkedIn !== null) schedule.checkedIn = req.body.checkedIn;
     if(req.body.checkedInDate) schedule.checkedInDate = req.body.checkedInDate;
     
