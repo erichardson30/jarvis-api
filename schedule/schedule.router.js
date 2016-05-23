@@ -72,20 +72,7 @@ apiRouter.delete('/', function(req, res) {
 });
 
 apiRouter.put('/checkedin/:id', function( req, res) {
-    // Schedules.findById(mongoose.Types.ObjectId(req.params.id), function(err, schedule) {
-    //     if(err) res.send(err);
-        
-    //     schedule = new Schedules();
-        
-    //     schedule.checkedIn = true;
-    //     schedule.checkedInDate = timezone.tz('America/New_York').toDate();
-        
-    //     schedule.save(function(err, schedule) {
-    //         if(err) res.send(err);
-    //         res.send({message: "Checked in!"});
-    //     })
-    // })
-    Schedules.update({_id: req.params.id}, {'$set' : {checkedIn : true, checkedInDate : timezone.tz('America/New_York').toDate()}},
+    Schedules.update({_id: mongoose.Types.ObjectId(req.params.id)}, {'$set' : {checkedIn : true, checkedInDate : timezone.tz('America/New_York').toDate()}},
         function(err, schedule) {
             if(err) res.send(err);
             res.send({message: "Checked in!"});
