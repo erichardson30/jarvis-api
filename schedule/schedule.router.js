@@ -72,7 +72,7 @@ apiRouter.delete('/', function(req, res) {
 });
 
 apiRouter.put('/checkedin/:id', function( req, res) {
-    Schedules.findById(mongoose.Types.ObjectID(req.params.id), function(err, schedule) {
+    Schedules.findById(mongoose.Types.ObjectId(req.params.id), function(err, schedule) {
         if(err) res.send(err);
         
         schedule = new Schedules();
