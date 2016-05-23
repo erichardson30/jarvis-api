@@ -85,7 +85,11 @@ apiRouter.put('/checkedin/:id', function( req, res) {
     //         res.send({message: "Checked in!"});
     //     })
     // })
-    Schedules.update({_id: req.params.id}, {'$set' : {checkedIn : true, checkedInDate : timezone.tz('America/New_York').toDate()}})
+    Schedules.update({_id: req.params.id}, {'$set' : {checkedIn : true, checkedInDate : timezone.tz('America/New_York').toDate()}},
+        function(err, schedule) {
+            if(err) res.send(err);
+            res.send({message: "Checked in!"});
+        })
 });
 
 apiRouter.get('/list', function(req, res) {
