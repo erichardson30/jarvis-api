@@ -1,7 +1,7 @@
 var express = require('express');
 var ObjectId = require('mongodb').ObjectID;
-var moment = require('moment');
 var timezone = require('moment-timezone');
+var mongoose = require('mongoose');
 
 // Mongoose Schemas
 var Schedules = require('./schedule.schema');
@@ -72,7 +72,7 @@ apiRouter.delete('/', function(req, res) {
 });
 
 apiRouter.put('/checkedin/:id', function( req, res) {
-    Schedules.findById(req.params.id, function(err, schedule) {
+    Schedules.findById(mongoose.Types.ObjectID(req.params.id), function(err, schedule) {
         if(err) res.send(err);
         
         schedule = new Schedules();
