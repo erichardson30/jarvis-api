@@ -42,8 +42,8 @@ apiRouter.get('/', function(req, res) {
 
 // gets all records within a 15 min window for everyone that is not checked in 
 apiRouter.get('/now', function(req, res) {
-    var later = timezone.tz('America/New_York').add(15, 'm').toDate();
-    var earlier = timezone.tz('America/New_York').subtract(15, 'm').toDate();
+    var later = timezone.tz('America/New_York').add(45, 'm').toDate();
+    var earlier = timezone.tz('America/New_York').subtract(45, 'm').toDate();
     
      Schedules.find({
          'date': {
