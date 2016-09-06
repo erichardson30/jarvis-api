@@ -24,6 +24,7 @@ apiRouter.post('/', function(req, res) {
     if(req.body.expecting) schedule.expecting = req.body.expecting;
     if(req.body.checkedIn !== null) schedule.checkedIn = req.body.checkedIn;
     if(req.body.checkedInDate) schedule.checkedInDate = req.body.checkedInDate;
+    if(req.body.officeLocation) schedule.officeLocation = req.body.officeLocation;
     
     schedule.save(function(err, schedule) {
         if (err) res.send(err);
@@ -33,14 +34,14 @@ apiRouter.post('/', function(req, res) {
 
 // gets all entries in the db 
 apiRouter.get('/', function(req, res) {
-    console.log("get all schedules");
-    Schedules.find({}, function(err, schedules) {
+    Schedules.find({'officeLocation' : req.query.officeLocation}, function(err, schedules) {
         if(err) res.send(err);
         res.json(schedules);
     });
 });
 
-// gets all records within a 15 min window for everyone that is not checked in 
+
+// gets all records within a 45 min window for everyone that is not checked in 
 apiRouter.get('/now', function(req, res) {
     var later = timezone.tz('America/New_York').add(45, 'm').toDate();
     var earlier = timezone.tz('America/New_York').subtract(45, 'm').toDate();
@@ -50,12 +51,14 @@ apiRouter.get('/now', function(req, res) {
             '$gt': earlier,
             '$lt': later
          },
-         'checkedIn' : 'false'
+         'checkedIn' : 'false',
+         'officeLocation' : req.query.officeLocation
      }, function(err, schedules) {
         if(err) res.send(err);
         res.json(schedules);
     });
 });
+
 
 // deletes all db entries after a week
 apiRouter.delete('/', function(req, res) {
@@ -83,10 +86,12 @@ apiRouter.get('/list', function(req, res) {
     var query = {};
    if(req.query.date) {
        var date = timezone.tz(req.query.date, 'America/New_York');
-       query = {'date' : { '$gte' : date }};
+       query = {'date' : { '$gte' : date },
+                'officeLocation' : req.query.officeLocation };
    } else {
        var date = timezone.tz('America/New_York').hour(0).minute(0).toDate();
-       query = {'date' : { '$gte': date }}
+       query = {'date' : { '$gte': date },
+                'officeLocation' : req.query.officeLocation }
    }
    
    Schedules.find(query, function(err, schedules) {
