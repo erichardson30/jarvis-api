@@ -84,14 +84,16 @@ apiRouter.put('/checkedin/:id', function( req, res) {
 
 apiRouter.get('/list', function(req, res) {
     var query = {};
+    var date, location;
    if(req.query.date) {
-       var date = timezone.tz(req.query.date, 'America/New_York');
-       query = {'date' : { '$gte' : date },
-                'officeLocation' : req.query.officeLocation };
+       date = timezone.tz(req.query.date, 'America/New_York');
+       query.date = { '$gte' : date };
    } else {
-       var date = timezone.tz('America/New_York').hour(0).minute(0).toDate();
-       query = {'date' : { '$gte': date },
-                'officeLocation' : req.query.officeLocation }
+       date = timezone.tz('America/New_York').hour(0).minute(0).toDate();
+       query.date = { '$gte': date };
+   }
+   if(req.query.officeLocation) {
+       query.officeLocation = req.query.officeLocation;
    }
    
    Schedules.find(query, function(err, schedules) {
