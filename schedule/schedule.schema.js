@@ -11,7 +11,8 @@ var ScheduleSchema = new Schema({
     channel: String,
     expecting: String,
     checkedIn : Boolean,
-    checkedInDate : Date
+    checkedInDate : Date,
+    officeLocation: String
 });
 
 // Return the model
